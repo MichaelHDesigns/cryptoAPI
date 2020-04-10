@@ -25,8 +25,8 @@ DEFAULT_BASE_CURRENCY = 'USD'
 AVAILABLE_BASE_CURRENCIES = ['USD', 'EUR', 'GBP']
 
 # The crypto currencies to retrieve data about.
-AVAILABLE_CRYPTO_CURRENCIES = ['BTC', 'ETH', 'LTC', 'EOS', 'XRP', 'BCH' ] #
-DEFAULT_DISPLAY_CURRENCIES = ['BTC', 'ETH', 'LTC']
+AVAILABLE_CRYPTO_CURRENCIES = ['BTC', 'ETH', 'LTC', 'HTH' ] #
+DEFAULT_DISPLAY_CURRENCIES = ['BTC', 'ETH', 'LTC', 'HTH' ]
 
 # Number of historic timepoints to plot (days).
 NUMBER_OF_TIMEPOINTS = 150
@@ -71,7 +71,7 @@ class UpdateWorker(QRunnable):
         try:
             rates = {}
             for n, crypto in enumerate(AVAILABLE_CRYPTO_CURRENCIES, 1):
-                url = 'https://min-api.cryptocompare.com/data/histoday?fsym={fsym}&tsym={tsym}&limit={limit}'
+                url = 'https://api.coingecko.com/api/v3/simple/price?ids=help-the-homeless-coin%2Cbitcoin%2Cethereum%2Clitecoin&vs_currencies=usd '
                 r = requests.get(
                     url.format(**{
                         'fsym': crypto,
@@ -91,7 +91,7 @@ class UpdateWorker(QRunnable):
                     # Stop without emitting finish signals.
                     return
 
-            url = 'https://min-api.cryptocompare.com/data/exchange/histoday?tsym={tsym}&limit={limit}'
+            url = 'https://api.coingecko.com/api/v3/coins/help-the-homeless-coin/history?date=04-10-2020'
             r = requests.get(
                 url.format(**{
                     'tsym': self.base_currency,
